@@ -2,4 +2,7 @@
     <string name="app_name">VkNewsClient</string>
     <string name="template_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit</string>
     <string name="template">Lorem</string>
+    <string name="navigation_item_main">Главная</string>
+    <string name="navigation_item_favourite">Избранное</string>
+    <string name="navigation_item_profile">Профиль</string>
 </resources>
