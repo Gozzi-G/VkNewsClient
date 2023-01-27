@@ -11,15 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.vknewsclient.MainViewModel
+import com.example.vknewsclient.ui.news_feed.NewsFeedViewModel
 import com.example.vknewsclient.navigation.AppNaGraph
 import com.example.vknewsclient.navigation.rememberNavigationState
 
 
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel
-) {
+fun MainScreen() {
 
     val navigationState = rememberNavigationState()
 
@@ -58,7 +56,7 @@ fun MainScreen(
         AppNaGraph(
             navHostController = navigationState.navHostController,
             homeScreenContent = {
-                HomeScreen(viewModel = viewModel, paddingValues = paddingValues)
+                HomeScreen(paddingValues = paddingValues)
             },
             favouriteScreenContent = {
                 TextCounter(name = "Favourite")

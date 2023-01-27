@@ -21,6 +21,7 @@ import com.example.vknewsclient.ui.theme.VkNewsClientTheme
 fun CommentsScreen(
     feedPost: FeedPost,
     comments: List<PostComment>,
+    onBackPressed: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -29,7 +30,7 @@ fun CommentsScreen(
                     Text(text = "Comment for FeedPost Id: ${feedPost.id}")
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { onBackPressed.invoke() }) {
                         Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
                     }
                 }
