@@ -2,45 +2,47 @@ package com.example.vknewsclient.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.vknewsclient.ui.news_feed.NewsFeedViewModel
-import com.example.vknewsclient.navigation.AppNaGraph
+import com.example.vknewsclient.domain.FeedPost
+import com.example.vknewsclient.navigation.AppNavGraph
 import com.example.vknewsclient.navigation.rememberNavigationState
 
 
 @Composable
 fun MainScreen() {
-
     val navigationState = rememberNavigationState()
 
     Scaffold(
         bottomBar = {
             BottomNavigation {
                 val navBackStackEntry by navigationState.navHostController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.destination?.route
 
                 val items = listOf(
                     NavigationItem.Home,
                     NavigationItem.Favourite,
                     NavigationItem.Profile
                 )
+                items.forEach { item ->
 
-                items.forEach() { item ->
+                    val selected = navBackStackEntry?.destination?.hierarchy?.any {
+                        it.route == item.screen.route
+                    } ?: false
+
                     BottomNavigationItem(
-                        selected = currentRoute == item.screen.route,
+                        selected = selected,
                         onClick = {
-                            navigationState.navigateTo(item.screen.route)
+                            if (!selected) {
+                                navigationState.navigateTo(item.screen.route)
+                            }
                         },
                         icon = {
-                            Icon(imageVector = item.icon, contentDescription = null)
+                            Icon(item.icon, contentDescription = null)
                         },
                         label = {
                             Text(text = stringResource(id = item.titleResId))
@@ -50,36 +52,41 @@ fun MainScreen() {
                     )
                 }
             }
-        },
+        }
     ) { paddingValues ->
-
-        AppNaGraph(
+        AppNavGraph(
             navHostController = navigationState.navHostController,
-            homeScreenContent = {
-                HomeScreen(paddingValues = paddingValues)
+            newsFeedScreenContent = {
+                HomeScreen(
+                    paddingValues = paddingValues,
+                    onCommentClickListener = {
+                        navigationState.navigateToComments(it)
+                    }
+                )
             },
-            favouriteScreenContent = {
-                TextCounter(name = "Favourite")
+            commentsScreenContent = { feedPost ->
+                CommentsScreen(
+                    onBackPressed = {
+                        navigationState.navHostController.popBackStack()
+                    },
+                    feedPost = feedPost
+                )
             },
-            profileScreenContent = {
-                TextCounter(name = "Profile")
-            }
+            favouriteScreenContent = { TextCounter(name = "Favourite") },
+            profileScreenContent = { TextCounter(name = "Profile") }
         )
     }
 }
 
 @Composable
 private fun TextCounter(name: String) {
-    var count by rememberSaveable() {
+    var count by rememberSaveable {
         mutableStateOf(0)
     }
 
     Text(
-        modifier = Modifier.clickable {
-            count++
-        },
+        modifier = Modifier.clickable { count++ },
         text = "$name Count: $count",
         color = Color.Black
     )
-
 }

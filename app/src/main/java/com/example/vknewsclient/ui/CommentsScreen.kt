@@ -8,49 +8,64 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.vknewsclient.CommentsViewModelFactory
 import com.example.vknewsclient.domain.FeedPost
 import com.example.vknewsclient.domain.PostComment
+import com.example.vknewsclient.ui.commensts.CommentsScreenState
+import com.example.vknewsclient.ui.commensts.CommentsViewModel
 import com.example.vknewsclient.ui.theme.VkNewsClientTheme
 
 @Composable
 fun CommentsScreen(
-    feedPost: FeedPost,
-    comments: List<PostComment>,
     onBackPressed: () -> Unit,
+    feedPost: FeedPost,
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Comment for FeedPost Id: ${feedPost.id}")
-                },
-                navigationIcon = {
-                    IconButton(onClick = { onBackPressed.invoke() }) {
-                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
+    val viewModel: CommentsViewModel = viewModel(
+        factory = CommentsViewModelFactory(feedPost)
+    )
+    val screenState = viewModel.screenState.observeAsState(CommentsScreenState.Initial)
+    val currentState = screenState.value
+
+    if (currentState is CommentsScreenState.Comments) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(text = "Comments for FeedPost Id: ${currentState.feedPost.id}")
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { onBackPressed() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
                     }
+                )
+            }
+        ) { paddingValues ->
+            LazyColumn(
+                modifier = Modifier.padding(paddingValues),
+                contentPadding = PaddingValues(
+                    top = 16.dp,
+                    start = 8.dp,
+                    end = 8.dp,
+                    bottom = 72.dp
+                )
+            ) {
+                items(
+                    items = currentState.comments,
+                    key = { it.id }
+                ) { comment ->
+                    CommentItem(comment = comment)
                 }
-            )
-        }
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier.padding(paddingValues),
-            contentPadding = PaddingValues(
-                top = 16.dp,
-                start = 8.dp,
-                end = 8.dp,
-                bottom = 82.dp
-            )
-        ) {
-            items(
-                items = comments,
-                key = { it.id }
-            ) { comment ->
-                CommentItem(comment = comment)
             }
         }
     }
@@ -80,27 +95,26 @@ private fun CommentItem(
                 color = MaterialTheme.colors.onPrimary,
                 fontSize = 12.sp
             )
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = comment.commentText,
                 color = MaterialTheme.colors.onPrimary,
                 fontSize = 14.sp
             )
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = comment.publicationDate,
                 color = MaterialTheme.colors.onSecondary,
                 fontSize = 12.sp
             )
         }
-
     }
 }
 
 @Preview
 @Composable
 private fun PreviewComment() {
-    VkNewsClientTheme() {
+    VkNewsClientTheme {
         CommentItem(comment = PostComment(id = 0))
     }
 }

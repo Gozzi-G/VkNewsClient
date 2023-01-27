@@ -13,8 +13,6 @@ class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<NewsFeedViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         setContent {
             VkNewsClientTheme {
                 MainScreen()
