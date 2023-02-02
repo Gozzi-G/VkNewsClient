@@ -1,5 +1,6 @@
 package com.example.vknewsclient.ui
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,8 +25,11 @@ fun HomeScreen(
     paddingValues: PaddingValues,
     onCommentClickListener: (FeedPost) -> Unit
 ) {
+    Log.d("asd", "HomeScreen: ")
     val viewModel: NewsFeedViewModel = viewModel()
     val screenState = viewModel.screenState.observeAsState(NewsFeedScreenState.Initial)
+
+
 
     when (val currentState = screenState.value) {
         is NewsFeedScreenState.Posts -> {
@@ -36,9 +40,7 @@ fun HomeScreen(
                 onCommentClickListener = onCommentClickListener
             )
         }
-        NewsFeedScreenState.Initial -> {
-
-        }
+        NewsFeedScreenState.Initial -> {}
     }
 }
 

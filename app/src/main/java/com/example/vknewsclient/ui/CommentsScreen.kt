@@ -1,5 +1,6 @@
 package com.example.vknewsclient.ui
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ fun CommentsScreen(
     onBackPressed: () -> Unit,
     feedPost: FeedPost,
 ) {
+    Log.d("asd", "CommentsScreen")
     val viewModel: CommentsViewModel = viewModel(
         factory = CommentsViewModelFactory(feedPost)
     )

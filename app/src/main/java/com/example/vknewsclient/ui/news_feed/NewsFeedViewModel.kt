@@ -1,5 +1,6 @@
 package com.example.vknewsclient.ui.news_feed
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,8 @@ class NewsFeedViewModel : ViewModel() {
     val screenState: LiveData<NewsFeedScreenState> = _screenState
 
     fun updateCount(feedPost: FeedPost, item: StatisticItem) {
+
+
         val currentState = screenState.value
         if (currentState !is NewsFeedScreenState.Posts) return
 
@@ -44,6 +47,7 @@ class NewsFeedViewModel : ViewModel() {
             }
         }
         _screenState.value = NewsFeedScreenState.Posts(posts = newPosts)
+
     }
 
     fun remove(feedPost: FeedPost) {
