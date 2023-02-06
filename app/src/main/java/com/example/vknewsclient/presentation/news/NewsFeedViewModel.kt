@@ -1,6 +1,5 @@
-package com.example.vknewsclient.ui.news_feed
+package com.example.vknewsclient.presentation.news
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

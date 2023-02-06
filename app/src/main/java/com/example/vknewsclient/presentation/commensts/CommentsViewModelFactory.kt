@@ -1,9 +1,8 @@
-package com.example.vknewsclient
+package com.example.vknewsclient.presentation.commensts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.vknewsclient.domain.FeedPost
-import com.example.vknewsclient.ui.commensts.CommentsViewModel
 
 class CommentsViewModelFactory(
     private val feedPost: FeedPost

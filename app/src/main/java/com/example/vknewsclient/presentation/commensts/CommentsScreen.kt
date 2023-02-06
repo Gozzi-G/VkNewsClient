@@ -1,4 +1,4 @@
-package com.example.vknewsclient.ui
+package com.example.vknewsclient.presentation.commensts
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -16,11 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.vknewsclient.CommentsViewModelFactory
 import com.example.vknewsclient.domain.FeedPost
 import com.example.vknewsclient.domain.PostComment
-import com.example.vknewsclient.ui.commensts.CommentsScreenState
-import com.example.vknewsclient.ui.commensts.CommentsViewModel
 import com.example.vknewsclient.ui.theme.VkNewsClientTheme
 
 @Composable

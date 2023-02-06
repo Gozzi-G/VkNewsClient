@@ -1,4 +1,4 @@
-package com.example.vknewsclient.ui.commensts
+package com.example.vknewsclient.presentation.commensts
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
