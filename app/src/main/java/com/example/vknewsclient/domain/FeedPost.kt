@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.navigation.NavType
 import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
+import kotlin.random.Random
 
 @Parcelize
 data class FeedPost(
@@ -14,8 +15,9 @@ data class FeedPost(
     val communityImageUrl: String,
     val contentText: String,
     val contentImageUrl: String?,
-    val statistics: List<StatisticItem>
-): Parcelable {
+    val statistics: List<StatisticItem>,
+    val isFavourite: Boolean = Random.nextBoolean(),
+) : Parcelable {
 
     companion object {
 
