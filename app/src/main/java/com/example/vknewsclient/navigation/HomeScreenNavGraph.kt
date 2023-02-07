@@ -29,8 +29,8 @@ fun NavGraphBuilder.homeScreenNavGraph(
                 }
             )
         ) {
-            val feedPost = it.arguments?.getParcelable(Screen.KEY_FEED_POST, FeedPost::class.java)
-                ?: throw java.lang.RuntimeException("Args is null")
+            val feedPost = it.arguments?.getParcelable<FeedPost>(Screen.KEY_FEED_POST)
+                ?: throw RuntimeException("Args is null")
             commentsScreenContent(feedPost)
         }
     }

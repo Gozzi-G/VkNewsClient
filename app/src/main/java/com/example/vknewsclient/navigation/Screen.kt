@@ -14,10 +14,11 @@ sealed class Screen(
     object Home : Screen(ROUTE_HOME)
     object Comments : Screen(ROUTE_COMMENTS) {
 
-        private const val ROUT_FOR_ARGS = "comments"
+        private const val ROUTE_FOR_ARGS = "comments"
+
         fun getRouteWithArgs(feedPost: FeedPost): String {
             val feedPostJson = Gson().toJson(feedPost)
-            return "$ROUT_FOR_ARGS/${feedPostJson.encode()}"
+            return "$ROUTE_FOR_ARGS/${feedPostJson.encode()}"
         }
     }
 

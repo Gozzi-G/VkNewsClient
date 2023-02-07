@@ -32,20 +32,11 @@ class MainActivity : ComponentActivity() {
                         MainScreen()
                     }
                     AuthState.NotAuthorized -> LoginScreen {
-                        launcher.launch(listOf(VKScope.WALL))
+                        launcher.launch(listOf(VKScope.WALL, VKScope.FRIENDS))
                     }
                     else -> {}
                 }
 
-/*                SideEffect {
-                    launcher.launch(arrayListOf(VKScope.WALL, VKScope.PHOTOS))
-                }
-
-                MainScreen()
-
-                LoginScreen {
-
-                }*/
             }
         }
     }
