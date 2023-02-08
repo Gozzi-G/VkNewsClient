@@ -1,6 +1,5 @@
 package com.example.vknewsclient.presentation.news
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,9 +20,8 @@ import com.example.vknewsclient.domain.FeedPost
 @Composable
 fun NewsFeedScreen(
     paddingValues: PaddingValues,
-    onCommentClickListener: (FeedPost) -> Unit
+    onCommentClickListener: (FeedPost) -> Unit,
 ) {
-    Log.d("asd", "HomeScreen: ")
     val viewModel: NewsFeedViewModel = viewModel()
     val screenState = viewModel.screenState.observeAsState(NewsFeedScreenState.Initial)
 
@@ -48,7 +46,7 @@ private fun FeedPosts(
     viewModel: NewsFeedViewModel,
     paddingValues: PaddingValues,
     posts: List<FeedPost>,
-    onCommentClickListener: (FeedPost) -> Unit
+    onCommentClickListener: (FeedPost) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.padding(paddingValues),
@@ -86,8 +84,8 @@ private fun FeedPosts(
                     onCommentClickListener = {
                         onCommentClickListener(feedPost)
                     },
-                    onLikeClickListener = { statisticItem ->
-                        viewModel.updateCount(feedPost, statisticItem)
+                    onLikeClickListener = { _ ->
+                        viewModel.changeLikeStatus(feedPost)
                     },
                 )
             }
