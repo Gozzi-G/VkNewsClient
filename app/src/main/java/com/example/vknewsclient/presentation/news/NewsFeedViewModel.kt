@@ -25,6 +25,15 @@ class NewsFeedViewModel(
         loadRecommendations()
     }
 
+    fun loadNextRecommendations() {
+        _screenState.value = NewsFeedScreenState.Posts(
+            posts = repository.feedPosts,
+            nextDataIsLoading = true
+
+        )
+        loadRecommendations()
+    }
+
 
     private fun loadRecommendations() {
         viewModelScope.launch {
